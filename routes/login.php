@@ -1,5 +1,5 @@
 <?php
 
-$router->map('POST', '/login/', function () {
+$router->map('POST', '/v1/login/', function () {
 	require __DIR__ . '/../controllers/login/login.php';
 });

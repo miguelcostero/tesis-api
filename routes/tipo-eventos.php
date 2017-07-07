@@ -1,21 +1,26 @@
 <?php
 
-$router->map('GET', '/tipo-eventos/', function () {
+$router->map('GET', '/v1/tipo-eventos/', function () {
+	require __DIR__ . '/../enviroment/authentification.php';
 	require __DIR__ . '/../controllers/tipo-eventos/tipo-eventos.php';
 });
 
-$router->map('GET', '/tipo-eventos/[i:id]/', function ($id) {
+$router->map('GET', '/v1/tipo-eventos/[i:id]/', function ($id) {
+	require __DIR__ . '/../enviroment/authentification.php';
 	require __DIR__ . '/../controllers/tipo-eventos/detalles.php';
 });
 
-$router->map('POST', '/tipo-eventos/', function () {
+$router->map('POST', '/v1/tipo-eventos/', function () {
+	require __DIR__ . '/../enviroment/authentification.php';
 	require __DIR__ . '/../controllers/tipo-eventos/agregar.php';
 });
 
-$router->map('PUT', '/tipo-eventos/[i:id]/', function ($id) {
+$router->map('PUT', '/v1/tipo-eventos/[i:id]/', function ($id) {
+	require __DIR__ . '/../enviroment/authentification.php';
 	require __DIR__ . '/../controllers/tipo-eventos/actualizar.php';
 });
 
-$router->map('DELETE', '/tipo-eventos/[i:id]/', function ($id) {
+$router->map('DELETE', '/v1/tipo-eventos/[i:id]/', function ($id) {
+	require __DIR__ . '/../enviroment/authentification.php';
 	require __DIR__ . '/../controllers/tipo-eventos/eliminar.php';
 });
