@@ -11,7 +11,7 @@ if ($body = json_decode(file_get_contents('php://input'))) {
     isset($body->cliente->telefonos)
   ) {
     # Iniciar transaccion
-    $con->autocommit(false);
+    $con->begin_transaction(MYSQLI_TRANS_START_WITH_CONSISTENT_SNAPSHOT);
 
     $sql = 'CALL updateCliente(\''.$body->cliente->nombre.'\', \''.$body->cliente->email.'\', \''.$body->cliente->direccion.'\', \''.$id.'\', \''.$body->cliente->dni.'\')';
 
@@ -40,7 +40,7 @@ if ($body = json_decode(file_get_contents('php://input'))) {
       $con->rollback();
       if ($con->errno == 1062) {
         http_response_code(400);
-        
+
         if (strpos($con->error, 'email')) {
           echo json_encode(array('error' => array('code' => 400, 'message' => 'El email \''.$body->cliente->email.'\' ya se encuentra registrado almacenado')));
         } else {

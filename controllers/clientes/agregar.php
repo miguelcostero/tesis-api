@@ -12,7 +12,7 @@ if ($body = json_decode(file_get_contents('php://input'))) {
     isset($body->cliente->telefonos)
   ) {
     # Iniciar transaccion
-    $con->autocommit(false);
+    $con->begin_transaction(MYSQLI_TRANS_START_WITH_CONSISTENT_SNAPSHOT);
 
     $sql = 'CALL addCliente(\''.$body->cliente->dni.'\', \''.$body->cliente->nombre.'\', \''.$body->cliente->email.'\', \''.$body->cliente->direccion.'\', @inserted_id)';
 

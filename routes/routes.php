@@ -10,58 +10,23 @@ $router->map('GET', '/', function () {
 	require __DIR__ . '/../controllers/home.php';
 });
 
-# ================================================================= #
-# -----------------------INICIO RUTAS EVENTOS---------------------- #
-# ================================================================= #
-$router->map('GET', '/eventos/', function () {
-	require __DIR__ . '/../controllers/eventos/eventos.php';
-});
+// Rutas eventos
+require __DIR__ . '/eventos.php';
 
-$router->map('GET', '/eventos/[i:id]/', function ($id) {
-	require __DIR__ . '/../controllers/eventos/detalles.php';
-});
+// Rutas clientes
+require __DIR__ . '/clientes.php';
 
-$router->map('POST', '/eventos/', function () {
-	require __DIR__ . '/../controllers/eventos/agregar.php';
-});
+// Rutas locaciones
+require __DIR__ . '/locaciones.php';
 
-$router->map('PUT', '/eventos/[i:id]/', function ($id) {
-	require __DIR__ . '/../controllers/eventos/actualizar.php';
-});
+// Rutas empleados
+require __DIR__ . '/empleados.php';
 
-$router->map('DELETE', '/eventos/[i:id]/', function ($id) {
-	require __DIR__ . '/../controllers/eventos/eliminar.php';
-});
-# ================================================================= #
-# ----------------------FIN RUTAS EVENTOS-------------------------- #
-# ================================================================= #
+// Rutas login
+require __DIR__ . '/login.php';
 
-
-# ================================================================= #
-# --------------------INICIO RUTAS CLIENTES------------------------ #
-# ================================================================= #
-$router->map('GET', '/clientes/', function () {
-	require __DIR__ . '/../controllers/clientes/clientes.php';
-});
-
-$router->map('GET', '/clientes/[i:id]/', function ($id) {
-	require __DIR__ . '/../controllers/clientes/detalles.php';
-});
-
-$router->map('POST', '/clientes/', function () {
-	require __DIR__ . '/../controllers/clientes/agregar.php';
-});
-
-$router->map('PUT', '/clientes/[i:id]/', function ($id) {
-	require __DIR__ . '/../controllers/clientes/actualizar.php';
-});
-
-$router->map('DELETE', '/clientes/[i:id]/', function ($id) {
-	require __DIR__ . '/../controllers/clientes/eliminar.php';
-});
-# ================================================================= #
-# ------------------------FIN RUTAS CLIENTES------------------------#
-# ================================================================= #
+// Rutas login
+require __DIR__ . '/tipo-eventos.php';
 
 // match current request url
 $match = $router->match();
