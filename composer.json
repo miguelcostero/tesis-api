@@ -4,6 +4,7 @@
     "license": "MIT",
     "require": {
         "altorouter/altorouter": "1.1.0",
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "firebase/php-jwt": "^5.0"
     }
 }

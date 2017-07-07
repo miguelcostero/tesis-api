@@ -1,5 +1,8 @@
 <?php
 require __DIR__ . '/../../config/db.php';
+require __DIR__ . '/../../enviroment/token.php';
+
+$token = new Token;
 
 if ($login = json_decode(file_get_contents('php://input'))) {
   if (isset($login->email) && isset($login->password)) {
@@ -15,7 +18,6 @@ if ($login = json_decode(file_get_contents('php://input'))) {
       $login_db = $result->fetch_object();
       if (md5($login->password) === $login_db->password) {
         $empleado = new stdClass();
-        $empleado->id = $login_db->id;
         $empleado->email = $login_db->email;
         $empleado->nombre = $login_db->nombre;
         $empleado->apellido = $login_db->apellido;
@@ -39,6 +41,8 @@ if ($login = json_decode(file_get_contents('php://input'))) {
             $empleado->telefonos = $telefonos;
           }
         }
+
+        $empleado->token = $token->encode(array('id' => $login_db->id, 'email' => $login_db->email, 'role' => $empleado->role->id));
 
         http_response_code(200);
         echo json_encode($empleado);
