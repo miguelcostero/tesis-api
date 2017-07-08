@@ -2,10 +2,25 @@
     "name": "amc/tesis-api",
     "description": "TP Producciones, C.A. API REST",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Miguel Costero",
+            "email": "miguel3490@gmail.com"
+        },
+        {
+            "name": "Angelica Molero",
+            "email": "angelicamoleror8@gmail.com"
+        },
+        {
+            "name": "Cesar Rojas",
+            "email": "crojasb77@gmail.com"
+        }
+    ],
     "require": {
         "altorouter/altorouter": "1.1.0",
         "monolog/monolog": "^1.23",
         "firebase/php-jwt": "^5.0",
-        "phpmailer/phpmailer": "^5.2"
+        "phpmailer/phpmailer": "^5.2",
+        "php": ">=7.0.6"
     }
 }
