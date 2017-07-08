@@ -1,11 +1,12 @@
 <?php
 require __DIR__ . '/../../config/db.php';
 
-if (isset($_GET['busqueda'])) {
-  die($_GET['busqueda']);
+if (isset($_GET['query'])) {
+  $sql = 'SELECT e.* FROM empleados e WHERE e.nombre LIKE \'%'.$_GET['query'].'%\' OR e.apellido LIKE \'%'.$_GET['query'].'%\'';
+} else {
+  $sql = 'SELECT e.* FROM empleados e';
 }
 
-$sql = 'SELECT e.* FROM empleados e';
 if ($result = $con->query($sql)) {
   if (!$result->num_rows > 0) {
     http_response_code(200);

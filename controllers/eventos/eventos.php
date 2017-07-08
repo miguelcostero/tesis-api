@@ -1,7 +1,12 @@
 <?php
 require __DIR__ . '/../../config/db.php';
 
-$sql = 'SELECT e.* FROM eventos e';
+if (isset($_GET['query'])) {
+  $sql = 'SELECT e.* FROM eventos e WHERE e.nombre LIKE \'%'.$_GET['query'].'%\'';
+} else {
+  $sql = 'SELECT e.* FROM eventos e';
+}
+
 if ($result = $con->query($sql)) {
   if (!$result->num_rows > 0) {
     http_response_code(200);

@@ -1,7 +1,12 @@
 <?php
 require __DIR__ . '/../../config/db.php';
 
-$sql = 'SELECT c.* FROM clientes c';
+if (isset($_GET['query'])) {
+  $sql = 'SELECT c.* FROM clientes c WHERE c.nombre LIKE \'%'.$_GET['query'].'%\' OR c.apellido LIKE \'%'.$_GET['query'].'%\'';
+} else {
+  $sql = 'SELECT c.* FROM clientes c';
+}
+
 if ($result = $con->query($sql)) {
   $clientes = array();
 

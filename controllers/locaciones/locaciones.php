@@ -1,7 +1,12 @@
 <?php
 require __DIR__ . '/../../config/db.php';
 
-$sql = 'SELECT l.* FROM locaciones l';
+if (isset($_GET['query'])) {
+  $sql = 'SELECT l.* FROM locaciones l WHERE l.nombre LIKE \'%'.$_GET['query'].'%\'';
+} else {
+  $sql = 'SELECT l.* FROM locaciones l';
+}
+
 if ($result = $con->query($sql)) {
   if (!$result->num_rows > 0) {
     http_response_code(200);
