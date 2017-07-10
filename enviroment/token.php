@@ -14,7 +14,7 @@ class Token {
     $token = array(
       'iat' => $issuedAt,
       'jti'  => $tokenId,
-      'nbf'  => $issuedAt + 10,
+      'nbf'  => $issuedAt,
       'exp'  => $issuedAt + (30 * 24 * 60 * 60),
       'data' => $data
     );
