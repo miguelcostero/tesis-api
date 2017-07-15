@@ -2,16 +2,16 @@
 require __DIR__ . '/../../config/db.php';
 
 if ($body = json_decode(file_get_contents('php://input'))) {
-  if (isset($body->tipo_evento->nombre)) {
-    $tipo_evento = $body->tipo_evento;
-    $sql = 'INSERT INTO tipo_evento (id, nombre) VALUES (DEFAULT,  \''.$tipo_evento->nombre.'\')';
+  if (isset($body->estado_evento->nombre)) {
+    $estado_evento = $body->estado_evento;
+    $sql = 'INSERT INTO estado_evento (id, nombre) VALUES (DEFAULT,  \''.$estado_evento->nombre.'\')';
     if ($result = $con->query($sql)) {
-      $tipo_evento->id = $con->insert_id;
+      $estado_evento->id = $con->insert_id;
       http_response_code(200);
-      echo json_encode(array('tipo_evento' => $tipo_evento));
+      echo json_encode(array('estado_evento' => $estado_evento));
     } else {
       http_response_code(500);
-      echo json_encode(array('error' => array('code' => 500, 'message' => 'No se pudo actualizar el tipo de evento', 'mysql_errno' => $con->errno, 'mysql_error' => $con->error)));
+      echo json_encode(array('error' => array('code' => 500, 'message' => 'No se pudo actualizar el estado de evento', 'mysql_errno' => $con->errno, 'mysql_error' => $con->error)));
     }
   } else {
     http_response_code(400);

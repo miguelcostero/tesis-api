@@ -26,6 +26,9 @@ require __DIR__ . '/empleados.php';
 require __DIR__ . '/login.php';
 
 // Rutas login
+require __DIR__ . '/estado-eventos.php';
+
+// Rutas login
 require __DIR__ . '/tipo-eventos.php';
 
 // match current request url

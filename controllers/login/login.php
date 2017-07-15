@@ -18,6 +18,7 @@ if ($login = json_decode(file_get_contents('php://input'))) {
       $login_db = $result->fetch_object();
       if ($login->password === $login_db->password) {
         $empleado = new stdClass();
+        $empleado->id = $login_db->id;
         $empleado->email = $login_db->email;
         $empleado->nombre = $login_db->nombre;
         $empleado->apellido = $login_db->apellido;

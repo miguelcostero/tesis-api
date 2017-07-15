@@ -5,7 +5,7 @@ function sendEmail ($email) {
 
   $mail = new PHPMailer;
 
-  $mail->SMTPDebug = 2;
+  // $mail->SMTPDebug = 0;
   $mail->isSMTP();
   $mail->CharSet = 'UTF-8';
   $mail->SMTPAuth = true;

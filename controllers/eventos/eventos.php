@@ -24,7 +24,7 @@ if ($result = $con->query($sql)) {
     $evento->icono = $e->icono;
     $evento->invitados = $e->invitados;
 
-    $sql = 'SELECT ei.id, ei.descripcion, ei.fecha, ei.hora FROM env_in ei WHERE ei.id_evento = \''.$e->id.'\'';
+    $sql = 'SELECT ei.id, ei.descripcion, ei.fecha, ei.hora, ei.notas FROM env_in ei WHERE ei.id_evento = \''.$e->id.'\'';
     if ($resultado = $con->query($sql)) {
       if ($resultado->num_rows > 0) {
         $evento->cronograma = array();
@@ -57,24 +57,44 @@ if ($result = $con->query($sql)) {
     $sql = 'SELECT l.* FROM locaciones l WHERE l.id = \''.$e->id_locacion.'\'';
     if ($resultado = $con->query($sql)) {
       $locacion = $resultado->fetch_object();
-      $evento->locacion = array(
-        'id' => $locacion->id,
-        'nombre' => $locacion->nombre,
-        'direccion' => $locacion->direccion,
-        'capacidad' => $locacion->capacidad
-      );
+
+      $sql = 'SELECT t.* FROM telefonos t INNER JOIN telefono_locacion tl ON t.id = tl.id_telefono WHERE tl.id_locacion = \''.$locacion->id.'\'';
+      if ($resultTelefono = $con->query($sql)) {
+        $telefonos = array();
+        while ($telefono = $resultTelefono->fetch_object()) {
+          array_push($telefonos, $telefono);
+        }
+
+        $evento->locacion = array(
+          'id' => $locacion->id,
+          'nombre' => $locacion->nombre,
+          'direccion' => $locacion->direccion,
+          'capacidad' => $locacion->capacidad,
+          'telefonos' => $telefonos
+        );
+      }
     }
 
     $sql = 'SELECT c.* FROM clientes c WHERE c.id = \''.$e->id_cliente.'\'';
     if ($resultado = $con->query($sql)) {
       $cliente = $resultado->fetch_object();
-      $evento->cliente = array(
-        'id' => $cliente->id,
-        'dni' => $cliente->dni,
-        'nombre' => $cliente->nombre,
-        'email' => $cliente->email,
-        'direccion' => $cliente->direccion
-      );
+
+      $sql = 'SELECT t.* FROM telefonos t INNER JOIN telefono_cliente tc ON t.id = tc.id_telefono WHERE tc.id_cliente = \''.$cliente->id.'\'';
+      if ($resultTelefono = $con->query($sql)) {
+        $telefonos = array();
+        while ($telefono = $resultTelefono->fetch_object()) {
+          array_push($telefonos, $telefono);
+        }
+
+        $evento->cliente = array(
+          'id' => $cliente->id,
+          'dni' => $cliente->dni,
+          'nombre' => $cliente->nombre,
+          'email' => $cliente->email,
+          'direccion' => $cliente->direccion,
+          'telefonos' => $telefonos
+        );
+      }
     }
 
     $sql = 'SELECT ee.* FROM estado_evento ee WHERE ee.id = \''.$e->id_estado.'\'';

@@ -1,26 +1,26 @@
 <?php
 require __DIR__ . '/../../config/db.php';
 
-if ($evento = json_decode(file_get_contents('php://input'))) {
+if ($body = json_decode(file_get_contents('php://input'))) {
   if (
-    isset($evento->nombre) &&
-    isset($evento->descripcion) &&
-    isset($evento->fecha_agregado) &&
-    isset($evento->icono) &&
-    isset($evento->invitados) &&
-    isset($evento->tipo_evento->id) &&
-    isset($evento->empleado->id) &&
-    isset($evento->locacion->id) &&
-    isset($evento->cliente->id) &&
-    isset($evento->estado_evento->id) &&
-    isset($evento->cronograma)
+    isset($body->evento->nombre) &&
+    isset($body->evento->descripcion) &&
+    isset($body->evento->icono) &&
+    isset($body->evento->invitados) &&
+    isset($body->evento->tipo_evento->id) &&
+    isset($body->evento->empleado->id) &&
+    isset($body->evento->locacion->id) &&
+    isset($body->evento->cliente->id) &&
+    isset($body->evento->estado_evento->id) &&
+    isset($body->evento->cronograma)
   ) {
-    $sql = 'INSERT INTO eventos (id, id_tipo_evento, id_empleado, id_locacion, id_cliente, id_estado, nombre, descripcion, fecha_agregado, icono, invitados) VALUES (DEFAULT, \''.$evento->tipo_evento->id.'\', \''.$evento->empleado->id.'\', \''.$evento->locacion->id.'\', \''.$evento->cliente->id.'\', \''.$evento->estado_evento->id.'\', \''.$evento->nombre.'\', \''.$evento->descripcion.'\', \''.$evento->fecha_agregado.'\', \''.$evento->icono.'\', \''.$evento->invitados.'\')';
+    $evento = $body->evento;
+    $sql = 'INSERT INTO eventos (id, id_tipo_evento, id_empleado, id_locacion, id_cliente, id_estado, nombre, descripcion, fecha_agregado, icono, invitados) VALUES (DEFAULT, \''.$evento->tipo_evento->id.'\', \''.$evento->empleado->id.'\', \''.$evento->locacion->id.'\', \''.$evento->cliente->id.'\', \''.$evento->estado_evento->id.'\', \''.$evento->nombre.'\', \''.$evento->descripcion.'\', NOW(), \''.$evento->icono.'\', \''.$evento->invitados.'\')';
     if ($result = $con->query($sql)) {
       $evento->id = $con->insert_id;
 
       foreach ($evento->cronograma as $env_in) {
-        $sql = 'INSERT INTO env_in (id, id_evento, descripcion, fecha, hora) VALUES (DEFAULT, \''.$evento->id.'\', \''.$env_in->descripcion.'\', \''.$env_in->fecha.'\', \''.$env_in->hora.'\')';
+        $sql = 'INSERT INTO env_in (id, id_evento, descripcion, fecha, hora, notas) VALUES (DEFAULT, \''.$evento->id.'\', \''.$env_in->descripcion.'\', \''.$env_in->fecha.'\', \''.$env_in->hora.'\', \''.$env_in->notas.'\')';
         if (!$resultado = $con->query($sql)) {
           http_response_code(400);
           echo json_encode(array('error' => array('code' => 400, 'message' => 'No se ha podido guardar el coronograma satisfactoriamiente', 'mysql_errno' => $con->errno, 'mysql_error' => $con->error)));
