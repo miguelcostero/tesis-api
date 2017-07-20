@@ -28,6 +28,17 @@ if ($body = json_decode(file_get_contents('php://input'))) {
         }
       }
 
+      if (isset($evento->talentos)) {
+        foreach ($evento->talentos as $talento) {          
+          $sql = 'INSERT INTO talento_evento (id_evento, id_talento) VALUES (\''.$evento->id.'\', \''.$talento->id.'\')';
+          if (!$con->query($sql)) {
+            http_response_code(500);
+            echo json_encode(array('error' => array('code' => 500, 'message' => 'Ha ocurrido un error procesando su solicitud', 'mysql_errno' => $con->errno, 'mysql_error' => $con->error)));
+            die();
+          }
+        }
+      }
+
       http_response_code(201);
       echo json_encode(array('evento' => $evento));
     } else {

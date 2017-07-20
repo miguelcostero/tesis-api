@@ -1,13 +1,14 @@
 <?php
 require __DIR__ . '/../../config/db.php';
 
-if ($locacion = json_decode(file_get_contents('php://input'))) {
+if ($body = json_decode(file_get_contents('php://input'))) {
   if (
-    isset($locacion->nombre) &&
-    isset($locacion->direccion) &&
-    isset($locacion->capacidad) &&
-    isset($locacion->telefonos)
+    isset($body->locacion->nombre) &&
+    isset($body->locacion->direccion) &&
+    isset($body->locacion->capacidad) &&
+    isset($body->locacion->telefonos)
   ) {
+    $locacion = $body->locacion;
     $sql = 'INSERT INTO locaciones (id, nombre, direccion, capacidad) VALUES (DEFAULT, \''.$locacion->nombre.'\', \''.$locacion->direccion.'\', \''.$locacion->capacidad.'\')';
     if ($result = $con->query($sql)) {
       $locacion->id = $con->insert_id;

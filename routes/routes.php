@@ -19,6 +19,9 @@ require __DIR__ . '/clientes.php';
 // Rutas locaciones
 require __DIR__ . '/locaciones.php';
 
+// Rutas talentos
+require __DIR__ . '/talentos.php';
+
 // Rutas empleados
 require __DIR__ . '/empleados.php';
 
@@ -30,6 +33,9 @@ require __DIR__ . '/estado-eventos.php';
 
 // Rutas login
 require __DIR__ . '/tipo-eventos.php';
+
+// Rutas telefonos
+require __DIR__ . '/telefonos.php';
 
 // match current request url
 $match = $router->match();

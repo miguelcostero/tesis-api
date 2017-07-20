@@ -34,6 +34,32 @@ if ($result = $con->query($sql)) {
       }
     }
 
+    $sql = 'SELECT t.id, t.nombre, t.email, t.notas FROM talentos t INNER JOIN talento_evento te ON t.id = te.id_talento WHERE te.id_evento = \''.$e->id.'\'';
+    if ($resultado = $con->query($sql)) {
+      if ($resultado->num_rows > 0) {
+        $talentos = array();
+
+        while ($talento = $resultado->fetch_object()) {
+          $sql = 'SELECT t.id, t.numero, t.prefijo, t.pais FROM telefonos t INNER JOIN telefono_talento tt ON t.id = tt.id_telefono WHERE tt.id_talento = \''.$talento->id.'\'';
+          if ($resultado2 = $con->query($sql)) {
+            if ($resultado2->num_rows > 0) {
+              $telefonos = array();
+
+              while ($telefono = $resultado2->fetch_object()) {
+                array_push($telefonos, $telefono);
+              }
+
+              $talento->telefonos = $telefonos;
+            }
+          }
+
+          array_push($talentos, $talento);
+        }
+
+        $evento->talentos = $talentos;
+      }
+    }
+
     $sql = 'SELECT te.* FROM tipo_evento te WHERE te.id = \''.$e->id_tipo_evento.'\'';
     if ($resultado = $con->query($sql)) {
       $tipo_evento = $resultado->fetch_object();
